@@ -1,0 +1,97 @@
+
+/* Styling the Body element i.e. Color,
+        Font, Alignment */
+body {
+    background-color: #2c3338;
+    font-family: Verdana;
+    text-align: center;
+}
+ 
+/* Styling the Form (Color, Padding, Shadow) */
+form {
+    background-color: #fff;
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 30px 20px;
+    box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.col-md-10 .line {
+    padding-left : 8vw;
+    background-color:red;
+    height:2px;
+   
+}
+/* Styling form-control Class */
+.form-control  {
+    font-size: 0.775rem;
+    margin-bottom: 10px;
+}
+ 
+/* Styling form-control Label */
+.form-control span {
+    display: block;
+    text-align: left;
+}
+ 
+/* Styling form-control input,
+select, textarea */
+.form-control input,
+.form-control select,
+.form-control textarea {
+    border: 1px solid #777;
+    border-radius: 2px;
+    font-family: inherit;
+    padding: 10px;
+    display: block;
+    width: 95%;
+}
+ 
+/* Styling form-control Radio
+button and Checkbox */
+.form-control input[type="radio"],
+.form-control input[type="checkbox"] {
+    display: inline-block;
+    width: auto;
+    
+}
+ 
+/* Styling Button */
+input[type='submit'] {
+    background-color: #277cea;
+  	color: #eee;
+    border: 1px solid #777;
+    border-radius: 2px;
+    font-family: inherit;
+    font-size: 21px;
+    display: inline-block;
+    text-align: center;
+    width: 50%;
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+
+.anchocompleto {
+	width: 100%;
+}
+table{
+    width: 100%;
+    table-layout: fixed;
+}
+td  {
+    white-space: nowrap;
+    overflow: hidden;    
+}
+
+.consejo{
+	font-size: 0.75em;
+	font-style: italic;
+}
+
+.monospace{
+	margin-left: 50px;
+	font-family: courier new;
+	text-align:left;
+}
+
+    

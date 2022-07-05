@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+	<title > Adiós </title>
+	<meta charset="UTF-8">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/comun.css">
+</head>
+
+<body>
+
+	<body class="align">
+		<form th:action="@{/logout}" method="POST" class="form login">
+			<div th:if="${param.errors}" class="alert alert-danger">
+				<h1 th:text="#{errores_votacion}"></h1>
+				<div th:each="err : ${#strings.arraySplit(param.errors, '|')}">
+				<li th:text="${err}"/>
+				</div>
+			</div>
+			<div th:unless="${param.errors}">
+				<h1 th:text="#{gracias}"/>
+			</div>
+			<div class="form__field">
+				<input type="submit" value="Salir"/>
+			</div>
+		</form>
+	</body>
+
+
+</body>
+
+</html>

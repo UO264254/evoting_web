@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<title>Votación</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	 <link rel="stylesheet" href="css/comun.css">
+	 <link rel="stylesheet" href="css/cuestionario.css">
+</head>
+
+<body>
+
+	<form action="#" th:action="@{/votacion}" class="form" th:object="${cuestionario}" method="post">
+
+		<h1 th:text="*{voter.procedure.name}"></h1>
+		
+		<div>
+			<span th:text=" *{voter.firstname} + ' ' + *{voter.lastname}  + ' ' + #{comience_votacion}" />
+			<div class="col-md-10">
+            	<hr class = "line" />
+        	</div>
+		</div>
+		<input type="hidden" th:field="*{voter}"/>
+		<!-- Cuestionario -->
+		<input type="hidden" th:field="*{ballots}"/>
+		<div class="form-control">
+			<table>
+			  <tbody>
+				<tr th:if="*{ballots.empty}">
+		            <td colspan="2"> <span th:text="#{cuestionario_no_disponible}"/></td>
+		        </tr>
+		        
+		        <!-- una fila por ballot -->
+		        <tr th:each="ballot, ballotstat: *{ballots}">
+		        	
+		        	<table>
+		        		<tbody>
+			        		<tr>
+			        			<td><span th:text="${ballot.description}"></span></td>
+			        			<input type="hidden" th:field="*{ballots[__${ballotstat.index}__].id.code}"/>
+			        			<input type="hidden" th:field="*{ballots[__${ballotstat.index}__].id.procedure}"/>	
+			        			<input type="hidden" th:field="*{ballots[__${ballotstat.index}__].maxpreferences}"/>
+			        			<input type="hidden" th:field="*{ballots[__${ballotstat.index}__].options}"/>
+			        			<input type="hidden" th:field="*{ballots[__${ballotstat.index}__].runners}"/>
+			        			<input type="hidden" th:field="*{ballots[__${ballotstat.index}__].name}"/>
+			        			<input type="hidden" th:field="*{ballots[__${ballotstat.index}__].description}"/>
+			        		</tr>
+				        	<!-- Una fila por opción -->
+				        	<tr th:if="${!ballot.options.empty}" th:each="opcion, stat : ${ballot.options}" class="monospace">
+				        		<input type="hidden" th:field="*{ballots[__${ballotstat.index}__].options[__${stat.index}__]}"/>
+				        		<input type="hidden" th:field="*{ballots[__${ballotstat.index}__].options[__${stat.index}__].id.ballotcode}"/>
+				        		<input type="hidden" th:field="*{ballots[__${ballotstat.index}__].options[__${stat.index}__].id.procedurecode}"/>
+				        		<input type="hidden" th:field="*{ballots[__${ballotstat.index}__].options[__${stat.index}__].id.text}"/>
+					        	<td th:if="${ballot.maxpreferences}>1">
+					        		<div>
+					        			<input type="checkbox" th:text="${opcion.id.text}" th:field="*{ballots[__${ballotstat.index}__].options[__${stat.index}__].selected}" th:value="${opcion.id.text}"></input>
+									</div>
+								</td>
+
+					        	<td th:if="${ballot.maxpreferences}==1">	
+					        		<div>				        		
+				        				<input type="radio" th:text="${opcion.id.text}" th:field="*{ballots[__${ballotstat.index}__].selected}" th:value="${opcion.id.text}"></input>	        			
+					        		</div>
+					        	</td>
+				        	</tr>
+				        	<tr th:if="${!ballot.runners.empty}" th:each="runner, runstat : ${ballot.runners}" class="monospace">
+				        		<input type="hidden" th:field="*{ballots[__${ballotstat.index}__].runners[__${runstat.index}__].id.candidateid}"/>
+				        		<input type="hidden" th:field="*{ballots[__${ballotstat.index}__].runners[__${runstat.index}__].id.ballotCode}"/>
+				        		<input type="hidden" th:field="*{ballots[__${ballotstat.index}__].runners[__${runstat.index}__].id.procedureCode}"/>
+				        		<input type="hidden" th:field="*{ballots[__${ballotstat.index}__].runners[__${runstat.index}__].firstname}"/>
+				        		<input type="hidden" th:field="*{ballots[__${ballotstat.index}__].runners[__${runstat.index}__].lastname}"/>
+					        	<td th:if="${ballot.maxpreferences}>1">
+					        		<div>
+					        	 		<input type="checkbox" th:text="${runner.firstname} + ' ' + ${runner.lastname}" th:field="*{ballots[__${ballotstat.index}__].runners[__${runstat.index}__].selected}" th:value="${runner.id.candidateid}"></input>
+					        		</div>
+					        	</td>
+					        	<td th:if="${ballot.maxpreferences}==1">
+					        	  	<div>
+					        			<input type="radio" th:text="${runner.firstname} + ' ' + ${runner.lastname}" th:field="*{ballots[__${ballotstat.index}__].selected}" th:value="${runner.id.candidateid}"></input>
+					        		</div>
+					        	</td>
+				        	</tr>
+				        	<tr>
+				        		<td th:if="${ballot.maxpreferences}>1"><span class="consejo" th:text=" #{elegir} + ${ballot.maxpreferences} + ' ' + #{opciones_maximo}"></span></td>
+				        	</tr>
+			        	</tbody>
+			        </table>
+			        </td>
+		        </tr>
+		        
+		    </tbody>
+			</table>
+			</div>
+		<div class="form__field">
+			<input type="submit" th:value="#{enviar_votacion}" />
+		</div>
+		<div th:if="${#fields.hasErrors()}" class="alert alert-danger">
+			<div th:each="e: ${#fields.detailedErrors()}" class="error">
+				<li th:if="${e.global}" th:text="${e.message}"/>
+        	</div>
+		</div>
+	</form>
+
+</body>
+
+</html>

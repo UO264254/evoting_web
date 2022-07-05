@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+	<title>Registro</title>
+	<link rel="stylesheet" href="css/comun.css">
+	<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+	<body class="align">
+
+		<div class="grid">
+
+			<!-- Create HTML registration form -->
+			
+
+
+				<!-- success message -->
+				<div th:if="${param.success}">
+					<div class="alert alert-info"><span th:text="#{registro_exito}"/></div>
+				</div>
+
+				<form th:action="@{/registration}" method="post" class="form login" th:object="${voter}"  >
+					<div class="grid-2">
+						<label for="username" th:text="#{usuario}"/>
+						<input id="username" type="text" class="form__input" placeholder="Usuario" th:field="*{username}"
+							required autofocus="autofocus" />
+					</div>
+					<div class="grid-2">
+						<label for="firstname" th:text="#{nombre}"/>
+						<input id="firstname" type="text" class="form__input" placeholder="Nombre" th:field="*{firstname}"
+							required autofocus="autofocus" />
+					</div>
+					<div class="grid-2">
+						<label for="lastname" th:text="#{apellidos}"/>
+						<input id="lastname" type="text" class="form__input" placeholder="Apellidos" th:field="*{lastname}"
+							required autofocus="autofocus" />
+					</div>
+					<div class="grid-2">
+						<label for="email" th:text="#{email}"/>
+						<input id="email" type="text" class="form__input" th:field="*{email}" required
+							autofocus="autofocus" placeholder="Email" />
+					</div>
+
+					<div class="grid-2">
+						<label for="password" th:text="#{password}"/> <input id="password" class="form__input" type="password"
+							th:field="*{password}" required autofocus="autofocus" />
+					</div>
+					<div class="grid-2">
+						<label for="procedure" th:text="#{proceso_electoral}"/>
+						<select class="form__input" id="procedures" th:field="*{procedure}">
+						    <option th:each="procedure : ${voter.procedures}" th:value="${procedure.code}" th:text="${procedure.name}"></option>
+						</select>
+					</div>
+					<div class="form__field">
+						<input type="submit" th:value="#{registrar}" />
+					</div>
+					<div class="form__field">
+					<p>
+						<span th:text="#{ya_registrado}"/> <a href="/" th:text="#{iniciar_sesion}" th:href="@{/login}" />
+					</p>
+					</div>
+					<div th:if="${#fields.hasErrors()}" class="alert alert-danger">
+						<li th:each="err: ${#fields.errors()}" th:text="${err}" class="error"/>
+					</div>
+				</form>
+			</div>
+		
+	</body>
+
+</html>
